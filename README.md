@@ -18,6 +18,9 @@ Uncertainties of reconstructed signals in presence of real drifts (degrading coo
 
 ![Uncertainties of Reconstructed signals](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/RECON-SIG.png)
 
+![3D Scatterplot](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/BAE_3D_SCATTER_ZEMA_HYD.png)
+
+
 ## Sensitivity analysis
 
 Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertainty towards drifts.
