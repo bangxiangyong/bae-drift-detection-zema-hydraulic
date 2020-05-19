@@ -22,7 +22,7 @@ Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertai
 
 ![Real drift](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/REAL-DRIFT.png)
 
-![Virtual drift-noise](hhttps://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/INJECTED-NOISE.png)
+![Virtual drift-noise](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/INJECTED-NOISE.png)
 
 ![virtual drift-sensordrifts](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/INJECTED-DRIFT.png)
 
