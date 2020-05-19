@@ -1,6 +1,6 @@
 # Bayesian autoencoders for drift detection in industrial environments
 
-Development of Bayesian Autoencoders to  quantify  epistemic  and  aleatoric  uncertainties, within the context of real and virtual drifts.
+Development of Bayesian Autoencoders to  quantify  epistemic  and  aleatoric  uncertainties, within the context of real and virtual drifts in industrial sensors.
 
 ## Dataset
 
