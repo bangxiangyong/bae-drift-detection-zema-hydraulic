@@ -6,6 +6,7 @@ import numpy as np
 from bnn.multiscaler import MultiScaler
 import copy
 from bnn.seed import bae_set_seed
+from mpl_toolkits.mplot3d import Axes3D
 
 bae_set_seed(100)
 
@@ -348,7 +349,6 @@ if model_name == "full_cov":
     vmin, vmax = np.array(matrix_list).min(),np.array(matrix_list).max()
     num_plots = len(matrix_list)
 
-    # fig, axes = plt.subplots(1,num_plots, dpi=dpi)
     fig, axes = plt.subplots(2,2)
     axes = axes.reshape(-1)
     sup_titles = ["a) Healthy condition","b) Near breakdown","c) Injected Noise (5%)","d) Injected Drift (5 bar)"]
@@ -384,17 +384,32 @@ for i in range(17):
     recon_sample_reshuffled[i,:]=recon_sample[feature_sensor_index_list[-1],:].mean(0)
     alea_sample_reshuffled[i,:]=alea_sample[feature_sensor_index_list[-1],:].mean(0)
 
-# plt.figure(figsize=(10,10),dpi=150)
-# plt.imshow(recon_sample_reshuffled,cmap='viridis')
-# plt.colorbar()
-#
-# plt.figure(figsize=(10,10),dpi=150)
-# plt.imshow(epi_sample_reshuffled,cmap='viridis')
-# plt.colorbar()
-#
-# plt.figure(figsize=(10,10),dpi=150)
-# plt.imshow(alea_sample_reshuffled,cmap='viridis')
-# plt.colorbar()
+#3D Coordinate plot
+fig = plt.figure(dpi=250)
+ax = fig.add_subplot(111, projection='3d')
+
+marker_alpha = 0.6
+marker_size = 15
+z_scaler = 1e-6
+for plot_ood_index in [0,1,2]:
+    ax.scatter(recon_loss_plot[plot_ood_index], epi_unc_plot[plot_ood_index], alea_unc_plot[plot_ood_index]*z_scaler, alpha=marker_alpha, s=marker_size)
+
+legend_list = ["Healthy", "Cooler Cond. (20%)", "Cooler Cond. (5%)"]
+
+for plot_drift_level_index in [1,2,3,4]:
+    ax.scatter(recon_drift[sensor_id][plot_drift_level_index], np_unc_result_drift[sensor_id,plot_drift_level_index,0,:], np_unc_result_drift[sensor_id,plot_drift_level_index,1,:]*z_scaler, marker='^', alpha=marker_alpha,s=marker_size)
+    legend_list.append("Inj. Drift ("+str(x_tick_labels_eff[plot_drift_level_index])+"%)")
+
+for plot_noise_level_index in [1,2,3,4]:
+    ax.scatter(recon_noise[sensor_id][plot_noise_level_index], np_unc_result_noise[sensor_id,plot_noise_level_index,0,:], np_unc_result_noise[sensor_id,plot_noise_level_index,1,:]*z_scaler, marker='x', alpha=marker_alpha,s=marker_size)
+    legend_list.append("Inj. Noise ("+str(x_tick_labels_eff[plot_noise_level_index])+"%)")
+
+ax.set_xlabel('Reconstruction Loss')
+ax.set_ylabel('Epistemic Uncertainty')
+ax.set_zlabel('Aleatoric Uncertainty')
+
+ax.legend(legend_list, prop={'size': 8})
+ax.text2D(0.06, 0.81, '$\\times 10^{6}$', transform=ax.transAxes)
 
 #==============ADDITIONAL PLOTS===============
 # fig, axes = plt.subplots(total_sensors,3)
