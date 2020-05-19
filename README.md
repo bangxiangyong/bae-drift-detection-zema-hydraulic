@@ -2,6 +2,8 @@
 
 Development of Bayesian Autoencoders to  quantify  epistemic  and  aleatoric  uncertainties, within the context of real and virtual drifts in industrial sensors.
 
+We use ensembling with anchored priors under the family of randomised MAP (maximum a posteriori) sampling developed by Tim Pearce. 
+
 ## Dataset
 
 We use a hydraulic condition monitoring dataset recorded at ZEMA Testbed: https://archive.ics.uci.edu/ml/datasets/Condition+monitoring+of+hydraulic+systems
