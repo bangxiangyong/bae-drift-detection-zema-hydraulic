@@ -4,6 +4,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import copy as copy
+from bnn.seed import bae_set_seed
+
+bae_set_seed(100)
 
 #args for script
 column_target = 0 #0-4
