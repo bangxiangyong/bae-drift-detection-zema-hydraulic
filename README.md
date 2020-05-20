@@ -36,4 +36,11 @@ Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertai
 
 ![virtual drift-sensordrifts](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/INJECTED-DRIFT.png)
 
+## Future steps
 
+- using a Gaussian likelihood with a full covariance matrix, instead of a diagonal only. Although the implementations are there already in this repo, we need to analyse it in a better way.
+- explore other choices of probability distribution for likelihood 
+- leverage the trio: reconstruction loss, epistemic and aleatoric uncertainties for unsupervised classification
+- variant Bayesian Autoencoder architectures, possible options include : convolutional, denoising, clustering,...
+- investigate latent space 
+- apply sensitivity analysis to investigate uncertainties due to all sensors instead of only one at a time.
