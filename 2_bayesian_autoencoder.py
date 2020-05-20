@@ -7,6 +7,7 @@ from bnn.multiscaler import MultiScaler
 import copy
 from bnn.seed import bae_set_seed
 from mpl_toolkits.mplot3d import Axes3D
+import torch
 
 bae_set_seed(100)
 
@@ -56,7 +57,7 @@ architecture_mu = [500,250,3,250,500]
 architecture_sig_diag_cov=architecture_mu
 lr = 0.0008
 num_samples = 10
-use_cuda = True
+use_cuda = torch.cuda.is_available()
 
 #diag_cov & combined mode
 model_name = "diag_cov"
