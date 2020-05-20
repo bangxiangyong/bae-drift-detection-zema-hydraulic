@@ -51,8 +51,6 @@ x_test_drift = nested_list_apply(x_test_drift, flatten_dimensions)
 #define model
 optimiser = "Adam"
 num_epoch_mu = 100 #10000 #1000
-num_epoch_sig_full_cov = 100 #2000 #1000
-num_epoch_sig_diag_cov = 150 #150 #1000
 architecture_mu = [500,250,3,250,500]
 architecture_sig_diag_cov=architecture_mu
 lr = 0.0008
@@ -104,7 +102,7 @@ def str_deci(number,num_deci=2):
     return ("{0:."+str(num_deci)+"f}").format(round(number,num_deci))
 
 #plot reconstructed signal
-plot_sample_index = 10
+plot_sample_index = 100
 plot_sensor_index = 10
 severity_index = 2
 n_resample = 60
@@ -249,7 +247,7 @@ for i in index_ood:
     alea_unc_plot += [alea_ood[i]]
 
 figsize = (6,3)
-dpi = 150
+dpi = 250
 fig, (ax1,ax2,ax3) = plt.subplots(1,3,figsize=figsize,dpi=dpi)
 
 x_tick_labels_eff = ('100', '20', '3')
@@ -280,7 +278,7 @@ np_unc_result_drift = np.array(unc_result_drift)
 #Plot single row for drifts
 #set plot sensor id here to show the sensitivity of metrics toward injected drifts
 figsize = (6,3)
-dpi = 150
+dpi = 250
 fig, axes = plt.subplots(1,3,figsize=figsize,dpi=dpi)
 sensor_id = 10
 # x_tick_labels_eff = ('0', '1', '2', '3', '4', '5')
@@ -391,7 +389,7 @@ ax = fig.add_subplot(111, projection='3d')
 
 marker_alpha = 0.6
 marker_size = 15
-z_scaler = 1e-6
+z_scaler = 1e-3
 for plot_ood_index in [0,1,2]:
     ax.scatter(recon_loss_plot[plot_ood_index], epi_unc_plot[plot_ood_index], alea_unc_plot[plot_ood_index]*z_scaler, alpha=marker_alpha, s=marker_size)
 
@@ -410,7 +408,7 @@ ax.set_ylabel('Epistemic Uncertainty')
 ax.set_zlabel('Aleatoric Uncertainty')
 
 ax.legend(legend_list, prop={'size': 8})
-ax.text2D(0.06, 0.81, '$\\times 10^{6}$', transform=ax.transAxes)
+ax.text2D(0.06, 0.81, '$\\times 10^{3}$', transform=ax.transAxes)
 
 #==============ADDITIONAL PLOTS===============
 # fig, axes = plt.subplots(total_sensors,3)
