@@ -4,6 +4,11 @@ Development of Bayesian Autoencoders to  quantify  epistemic  and  aleatoric  un
 
 We use ensembling with anchored priors under the family of randomised MAP (maximum a posteriori) sampling developed by Tim Pearce. 
 
+## Code Description
+- `0_download_data.py` downloads and formats the raw data, lastly pickle the data for convenience
+- `1_preprocess_resample.py` resamples and splitting into train/test data. Also applying noise and drifts on one sensor at a time.
+- `2_bayesian_autoencoder.py` trains the Bayesian Autoencoder, obtain reconstructed signals and evaluates them.
+
 ## Dataset
 
 We use a hydraulic condition monitoring dataset recorded at ZEMA Testbed: https://archive.ics.uci.edu/ml/datasets/Condition+monitoring+of+hydraulic+systems
