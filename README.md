@@ -4,6 +4,11 @@ Development of Bayesian Autoencoders to  quantify  epistemic  and  aleatoric  un
 
 We use ensembling with anchored priors under the family of randomised MAP (maximum a posteriori) sampling developed by Tim Pearce. 
 
+## Code Description
+- `0_download_data.py` downloads and formats the raw data, lastly pickle the data for convenience
+- `1_preprocess_resample.py` resamples and splitting into train/test data. Also applying noise and drifts on one sensor at a time.
+- `2_bayesian_autoencoder.py` trains the Bayesian Autoencoder, obtain reconstructed signals and evaluates them.
+
 ## Dataset
 
 We use a hydraulic condition monitoring dataset recorded at ZEMA Testbed: https://archive.ics.uci.edu/ml/datasets/Condition+monitoring+of+hydraulic+systems
@@ -31,4 +36,11 @@ Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertai
 
 ![virtual drift-sensordrifts](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/INJECTED-DRIFT.png)
 
+## Future steps
 
+- using a Gaussian likelihood with a full covariance matrix, instead of a diagonal only. Although the implementations are there already in this repo, we need to analyse it in a better way.
+- explore other choices of probability distribution for likelihood 
+- leverage the trio: reconstruction loss, epistemic and aleatoric uncertainties for unsupervised classification
+- variant Bayesian Autoencoder architectures, possible options include : convolutional, denoising, clustering,...
+- investigate latent space 
+- apply sensitivity analysis to investigate uncertainties due to all sensors instead of only one at a time.
