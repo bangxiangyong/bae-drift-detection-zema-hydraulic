@@ -410,7 +410,102 @@ ax.set_zlabel('Aleatoric Uncertainty')
 ax.legend(legend_list, prop={'size': 8})
 ax.text2D(0.06, 0.81, '$\\times 10^{3}$', transform=ax.transAxes)
 
-#==============ADDITIONAL PLOTS===============
+#========Unsupervised clustering==========
+# unsupervised_data = []
+# unsupervised_labels_true = []
+# z_scaler = 1e-6
+# for plot_ood_index,label_index in zip([0,1,2],[0,1,2]):
+#     real_drifts = np.array([recon_loss_plot[plot_ood_index],
+#                             epi_unc_plot[plot_ood_index],
+#                             alea_unc_plot[plot_ood_index]*z_scaler]
+#                            )
+#     unsupervised_data.append(real_drifts)
+#     unsupervised_labels_true.append(np.ones_like(recon_loss_plot[plot_ood_index]) * label_index)
+# for plot_drift_level_index,label_index in zip([1,2,3,4],[3,4,5,6]):
+#     injected_drifts = np.array([recon_drift[sensor_id][plot_drift_level_index],
+#                                 np_unc_result_drift[sensor_id,plot_drift_level_index,0,:],
+#                                 np_unc_result_drift[sensor_id,plot_drift_level_index,1,:]*z_scaler])
+#     unsupervised_data.append(injected_drifts)
+#     unsupervised_labels_true.append(np.ones_like(recon_drift[sensor_id][plot_drift_level_index]) * label_index)
+# for plot_noise_level_index,label_index in zip([1,2,3,4],[7,8,9,10]):
+#     injected_noise = np.array([recon_noise[sensor_id][plot_noise_level_index],
+#                                np_unc_result_noise[sensor_id,plot_noise_level_index,0,:],
+#                                np_unc_result_noise[sensor_id,plot_noise_level_index,1,:]*z_scaler])
+#     unsupervised_data.append(injected_noise)
+#     unsupervised_labels_true.append(np.ones_like(recon_noise[sensor_id][plot_noise_level_index]) * label_index)
+#
+#
+# unsupervised_data = np.concatenate(unsupervised_data,axis=1)
+# unsupervised_data = np.moveaxis(unsupervised_data, 0,1)
+# unsupervised_labels_true = np.concatenate(unsupervised_labels_true).astype("int")
+#
+# from sklearn import metrics
+# from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
+# from sklearn.preprocessing import StandardScaler
+# #split 70-30?
+#
+# def dbscan_predict(model, X):
+#
+#     nr_samples = X.shape[0]
+#
+#     y_new = np.ones(shape=nr_samples, dtype=int) * -1
+#
+#     for i in range(nr_samples):
+#         diff = model.components_ - X[i, :]  # NumPy broadcasting
+#
+#         dist = np.linalg.norm(diff, axis=1)  # Euclidean distance
+#
+#         shortest_dist_idx = np.argmin(dist)
+#
+#         if dist[shortest_dist_idx] < model.eps:
+#             y_new[i] = model.labels_[model.core_sample_indices_[shortest_dist_idx]]
+#
+#     return y_new
+#
+# #train unsupervised k-means
+# sil_scores = []
+# # unsupervised_train = unsupervised_data[:,[0,1]]
+# # unsupervised_train = unsupervised_data[:,[1,2]]
+# # unsupervised_train = unsupervised_data[:,[0,1,2]]
+# unsupervised_train = unsupervised_data[:,[0]]
+# n_clusters_range= np.arange(3,20)
+#
+# # for n_clusters in n_clusters_range:
+# #     kmeans_model = KMeans(n_clusters=n_clusters, random_state=10).fit(unsupervised_train)
+# #     trained_labels = kmeans_model.labels_
+# #     sil_score = metrics.silhouette_score(unsupervised_train, trained_labels, metric='euclidean')
+# #     print(sil_score)
+# #     sil_scores.append(sil_score)
+# # best_n_clusters = n_clusters_range[np.argmax(sil_scores)]
+# # print("BEST N CLUSTERS:{}".format(best_n_clusters))
+# # print("SILHOUTTE SCORE:{}".format(np.max(sil_scores)))
+#
+# best_n_clusters = 11
+# # unsupervised_model = KMeans(n_clusters=best_n_clusters).fit(unsupervised_train)
+# # unsupervised_model = AgglomerativeClustering().fit(unsupervised_train)
+# unsupervised_model = DBSCAN(eps=2, min_samples=5).fit(unsupervised_train)
+#
+# #predict using k-means
+# # unsupervised_labels_pred = unsupervised_model.predict(unsupervised_train)
+# # unsupervised_labels_pred = AgglomerativeClustering(n_clusters=11).fit_predict(unsupervised_train)
+# unsupervised_labels_pred = dbscan_predict(unsupervised_model,unsupervised_train)
+# nmi_score = metrics.normalized_mutual_info_score(unsupervised_labels_true, unsupervised_labels_pred)
+# fowlkes_mallows_score = metrics.fowlkes_mallows_score(unsupervised_labels_true, unsupervised_labels_pred)
+# ajrand_score = metrics.adjusted_rand_score(unsupervised_labels_true, unsupervised_labels_pred)
+# sil_score = metrics.silhouette_score(unsupervised_train, unsupervised_labels_pred, metric='euclidean')
+# print(nmi_score)
+# print(ajrand_score)
+# print(fowlkes_mallows_score)
+# print(sil_score)
+#
+# fig = plt.figure(dpi=250)
+# ax = fig.add_subplot(111, projection='3d')
+# ax.scatter(unsupervised_data[:,0],unsupervised_data[:,1],unsupervised_data[:,2], c=unsupervised_labels_pred)
+#
+#
+#
+#
+# #==============ADDITIONAL PLOTS===============
 # fig, axes = plt.subplots(total_sensors,3)
 # for sensor_id in range(total_sensors):
 #     x_tick_labels_eff = ('0', '5', '10', '15', '20', '25')
@@ -422,7 +517,7 @@ ax.text2D(0.06, 0.81, '$\\times 10^{3}$', transform=ax.transAxes)
 #     axes[sensor_id,1].set_xticklabels(x_tick_labels_eff)
 #     axes[sensor_id,2].boxplot(np_unc_result_noise[sensor_id,:,0,:].tolist(),showfliers=show_outliers)
 #     axes[sensor_id,2].set_xticklabels(x_tick_labels_eff)
-
+#
 # fig, axes = plt.subplots(total_sensors,3)
 # for sensor_id in range(total_sensors):
 #     x_tick_labels_eff = ('0', '5', '10', '15', '20', '25')
@@ -435,8 +530,8 @@ ax.text2D(0.06, 0.81, '$\\times 10^{3}$', transform=ax.transAxes)
 #
 #     axes[sensor_id,2].boxplot(np_unc_result_drift[sensor_id,:,1,:].tolist(),showfliers=show_outliers)
 #     axes[sensor_id,2].set_xticklabels(x_tick_labels_eff)
-
-
+#
+#
 
 #=======PLOT LATENT VARIABLE===========
 # from sklearn.decomposition import PCA
