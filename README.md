@@ -25,7 +25,6 @@ Uncertainties of reconstructed signals in presence of real drifts (degrading coo
 
 ![3D Scatterplot](https://github.com/bangxiangyong/bae-drift-detection-zema-hydraulic/blob/master/figures_bae_zema/BAE_3D_SCATTER_ZEMA_HYD.png)
 
-
 ## Sensitivity analysis
 
 Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertainty towards drifts.
@@ -44,3 +43,19 @@ Sensitivity of reconstruction loss, epistemic uncertainty and aleatoric uncertai
 - variant Bayesian Autoencoder architectures, possible options include : convolutional, denoising, clustering,...
 - investigate latent space 
 - apply sensitivity analysis to investigate uncertainties due to all sensors instead of only one at a time.
+
+## Citation
+
+B. X. Yong, Y. Fathy and A. Brintrup, "Bayesian Autoencoders for Drift Detection in Industrial Environments," 2020 IEEE International Workshop on Metrology for Industry 4.0 & IoT, 2020, pp. 627-631, doi: 10.1109/MetroInd4.0IoT48571.2020.9138306.
+
+```
+@inproceedings{yong2020bae,
+  author={Yong, Bang Xiang and Fathy, Yasmin and Brintrup, Alexandra},
+  booktitle={2020 IEEE International Workshop on Metrology for Industry 4.0 IoT}, 
+  title={Bayesian Autoencoders for Drift Detection in Industrial Environments}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={627-631},
+  doi={10.1109/MetroInd4.0IoT48571.2020.9138306}}
+```
